@@ -3,13 +3,16 @@ app = Flask(__name__)
 
 import pandas as pd
 import numpy as np
-from sqlalchemy import create_engine
+#from sqlalchemy import create_engine
 from bokeh.plotting import figure,vplot
 from bokeh.embed import components
 
-engine = create_engine('postgresql://HelenWang@localhost:5432/scrape')
+#engine = create_engine('postgresql://HelenWang@localhost:5432/scrape')
+#df = pd.read_sql_query('select * from books', con = engine, index_col = 'id')
 
-df = pd.read_sql_query('select * from books', con = engine, index_col = 'id')
+path = "https://www.dropbox.com/s/5m8hlwb8lokvwfn/scrape.csv?dl=1"
+df = pd.read_csv(path, header = 0,index_col=0)
+
 df2 = df[['title','no_ratings']].drop_duplicates(subset = ['title'], keep = 'last')
 df2['title upp'] = df2['title'].str.upper()
 df3 = df2.drop_duplicates(subset = ['title upp'], keep = 'last')
